@@ -1,18 +1,11 @@
-const timeNodes = Array.from(document.querySelectorAll('[data-time]'));
+const divs = document.querySelectorAll('div');
 
-const seconds = timeNodes
-.map(node => node.dataset.time)
-.map(timeCode => {
-	const [mins, secs] = timeCode.split(':').map(parseFloat);
-	return (mins*60)+secs;
-})
-.reduce((a,b)=>a + b);
+function logText(e) {
+	console.log(this.classList.value);
+	e.stopPropagation();
+}
 
-let secondsLeft = seconds;
-const hours = Math.floor(secondsLeft / 3600);
-secondsLeft = secondsLeft % 3600;
-
-const mins = Math.floor(secondsLeft / 60);
-secondsLeft = secondsLeft % 60;
-
-console.log(hours, mins, secondsLeft);
+divs.forEach(div=> div.addEventListener('click', logText, {
+	capture: false,
+	once: true
+}));
